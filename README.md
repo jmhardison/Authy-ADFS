@@ -1,3 +1,4 @@
+![](https://lmdev.visualstudio.com/_apis/public/build/definitions/b42a8cc4-b6ef-4e51-bf82-5f8cff165dcf/13/badge)
 # Authy-ADFS
 ## Description
 
