@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Authy_ADFS.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="AuthyAPIKey" Description="API Key for accessing authy api. Generate in Authy dashboard for application you created." Type="System.String" Scope="Application">
+      <Value Profile="(Default)">apikey here</Value>
+    </Setting>
+    <Setting Name="AuthyTestMode" Description="Enable or disable test mode use. See Authy portal for more details." Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DataStore" Description="Type of datastore to use. 0 = Azure DocumentDB, 1 = Attribute on user in Active Directory" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ADAttribute" Description="Attribute distinguished name to read and write binding information to in Active Directory." Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DocumentDBURI" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DocumentDBKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>

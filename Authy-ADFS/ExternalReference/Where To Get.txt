@@ -1,0 +1,1 @@
+You must retreive a copy of 'Microsoft.IdentityServer.Web.dll' from an ADFS server under the path: C:\Windows\ADFS
