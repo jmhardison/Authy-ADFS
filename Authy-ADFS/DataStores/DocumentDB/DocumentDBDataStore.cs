@@ -11,9 +11,13 @@ namespace Authy_ADFS.DataStores.DocumentDB
 {
     public class DocumentDBDataStore : IDataStoreOperations
     {
+        //retrieve configuration for URI and KEY from application config.
         private string DocumentDBURI = ConfigurationManager.AppSettings["DocumentDBURI"];
         private string DocumentDBKey = ConfigurationManager.AppSettings["DocumentDBKey"];
+
         private DocumentClient documentDBClient;
+        
+        //these might be temporary for now, before release potentially extend them into configuration?
         private const string dbName = "authy-adfs-db";
         private const string collectionName = "usermappings";
 
@@ -26,7 +30,7 @@ namespace Authy_ADFS.DataStores.DocumentDB
         {
             try
             {
-                this.documentDBClient.ReadDocumentAsync(UriFactory.CreateDocumentUri(dbName, collectionName, inputUser.UserID));
+                this.documentDBClient.ReadDocumentAsync(UriFactory.CreateDocumentUri(dbName, collectionName, inputUser.UserEmail));
                 return true;
             }
             catch (DocumentClientException de)
@@ -43,14 +47,18 @@ namespace Authy_ADFS.DataStores.DocumentDB
             }
         }
 
+        /// <summary>
+        /// Get and return the RegisteredUser object.
+        /// </summary>
+        /// <param name="inputUser"></param>
+        /// <returns></returns>
         public AuthyRegisteredUser GetRegisteredUser(AuthyRegisteredUser inputUser)
         {
             try
             {
-
                 IQueryable<AuthyRegisteredUser> regUserQuery = this.documentDBClient.CreateDocumentQuery<AuthyRegisteredUser>(
                     UriFactory.CreateDocumentCollectionUri(dbName, collectionName), null).Where(item => item.UserEmail == inputUser.UserEmail);
-                
+
                 return regUserQuery.Single();
             }
             catch (DocumentClientException de)
@@ -67,35 +75,33 @@ namespace Authy_ADFS.DataStores.DocumentDB
             }
         }
 
+
+        /// <summary>
+        /// Deletes user from DocumentDB.
+        /// </summary>
+        /// <param name="inputUser"></param>
+        /// <returns></returns>
         public bool DeleteRegisteredUser(AuthyRegisteredUser inputUser)
         {
-            throw new NotImplementedException();
+            try
+            {
+                //try the delete and return true.
+                this.documentDBClient.DeleteDocumentAsync(UriFactory.CreateDocumentUri(dbName, collectionName, inputUser.UserEmail));
+                return true;
+            }
+            catch (DocumentClientException de)
+            {
+                if (de.StatusCode == HttpStatusCode.NotFound)
+                {
+                    //if not found throw not found exception.
+                    throw new Exception("NOTFOUND");
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
-
-        //public bool CheckandRemoveUser(Authy_ADFS.DataStores.Model.AuthyRegisteredUser inputUser)
-        //{
-        //    try
-        //    {
-        //        var user = this.documentDBClient.ReadDocumentAsync(UriFactory.CreateDocumentUri(dbName, collectionName, inputUser.UserID));
-
-        //        if(user.Result.StatusCode == HttpStatusCode.Found)
-        //        {
-        //            this.documentDBClient.DeleteDocumentAsync(UriFactory.CreateDocumentCollectionUri(dbName, collectionName), inputUser);
-        //        }
-        //        return false;
-        //    }
-        //    catch (DocumentClientException de)
-        //    {
-        //        if (de.StatusCode == HttpStatusCode.NotFound)
-        //        {
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //}
 
         /// <summary>
         /// Establish connection to DocumentDB URI

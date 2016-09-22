@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -75,7 +76,7 @@
     <Compile Include="ADFS\ADFSPresentationAdapter.cs" />
     <Compile Include="Authy\AUTHYAuthenticationAdapter.cs" />
     <Compile Include="DataStores\ActiveDirectory\ActiveDirectoryDataStore.cs" />
-    <Compile Include="DataStores\Model\DataStore.cs" />
+    <Compile Include="DataStores\DataStore.cs" />
     <Compile Include="DataStores\DocumentDB\DocumentDBDataStore.cs" />
     <Compile Include="DataStores\Interface\IDataStoreOperations.cs" />
     <Compile Include="DataStores\Model\AuthyRegisteredUser.cs" />
