@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="$(var.SolutionName)" Language="1033" Version="0.1.0.0" Manufacturer="Jonathan Hardison" UpgradeCode="7dc6d503-876a-44e5-bfc3-682c4ca02202">
+		<Package InstallerVersion="400" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high"/>
+
+		<Feature Id="ProductFeature" Title="Authy-ADFS" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="GACComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="Authy-ADFS" />
+        <Directory Id="GAC" Name="GAC" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+      <Component Id="Authy_net">
+        <File Source="$(var.Authy-ADFS.TargetDir)Authy.Net.dll" />
+      </Component>
+      <Component Id="Authy_ADFS">
+        <File Source="$(var.Authy-ADFS.TargetDir)Authy-ADFS.dll" />
+      </Component>
+      <Component Id="Authy_ADFS_Config">
+        <File Source="$(var.Authy-ADFS.TargetDir)Authy-ADFS.dll.config" />
+      </Component>
+      <Component Id="DocumentDB_Spatial">
+        <File Source="$(var.Authy-ADFS.TargetDir)DocumentDB.Spatial.SQL.dll" />
+      </Component>
+      <Component Id="Microsoft_azure_documents">
+        <File Source="$(var.Authy-ADFS.TargetDir)Microsoft.Azure.Documents.Client.dll" />
+      </Component>
+      <Component Id="Microsoft_azure_documents_xml">
+        <File Source="$(var.Authy-ADFS.TargetDir)Microsoft.Azure.Documents.Client.xml" />
+      </Component>
+      <Component Id="Newtonsoft">
+        <File Source="$(var.Authy-ADFS.TargetDir)Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="NewtonsoftXML">
+        <File Source="$(var.Authy-ADFS.TargetDir)Newtonsoft.Json.xml" />
+      </Component>
+      <Component Id="QRCoder">
+        <File Source="$(var.Authy-ADFS.TargetDir)QRCoder.dll" />
+      </Component>
+      <Component Id="UnityEngine">
+        <File Source="$(var.Authy-ADFS.TargetDir)UnityEngine.dll" />
+      </Component>
+      
+		</ComponentGroup>
+    <ComponentGroup Id="GACComponents" Directory="GAC">
+      <Component Id="GACComponent">
+        <File Id="Authy_ADFS_GAC" Name="Authy-ADFS.dll" Source="$(var.Authy-ADFS.TargetDir)Authy-ADFS.dll" KeyPath="yes" Assembly=".net"/>
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>
